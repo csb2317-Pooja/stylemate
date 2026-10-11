@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>StyleMate — Intelligent AI Fashion Assistant & Digital Wardrobe</title>
+  <meta name="description" content="Personalized AI-powered mobile fashion assistant that recommends the perfect outfit for any occasion, syncs with real-time weather, manages your digital closet, and offers virtual try-on.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Ambient Luxury Lighting Glows -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Desktop Top Control Bar -->
+  <header class="desktop-bar">
+    <div class="bar-brand">
+      <div class="logo-symbol">S</div>
+      <div>
+        <h1>StyleMate</h1>
+      </div>
+      <span class="badge">AI Couture 2.5</span>
+    </div>
+
+    <div class="bar-controls">
+      <div class="pill-btn backend-status-badge" id="backend-status-badge" onclick="checkBackendHealthStatus()" title="Backend Server Status">
+        <span class="live-dot" id="header-live-dot"></span>
+        <span id="backend-status-text">Backend Synced</span>
+      </div>
+      <div class="pill-btn user-profile-pill" id="header-user-pill" onclick="navigateTo('screen-login-dashboard')" title="Account Portal">
+        <div class="mini-avatar" id="header-mini-avatar">E</div>
+        <span id="header-display-name">Elena Rostova</span>
+      </div>
+      <button class="pill-btn active" id="btn-view-phone" onclick="toggleDeviceView('phone')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+        Mobile Preview
+      </button>
+      <button class="pill-btn" id="btn-view-expand" onclick="toggleDeviceView('expanded')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+        Expanded Canvas
+      </button>
+      <button class="pill-btn" id="btn-top-fashion" onclick="navigateTo('screen-fashion')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        Fashion Boutique
+      </button>
+      <button class="pill-btn" id="btn-top-login" onclick="navigateTo('screen-login-dashboard')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+        Login Dashboard
+      </button>
+      <button class="pill-btn" onclick="toggleTheme()" title="Toggle Theme">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="12" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        Theme
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Mobile App Simulated Bezel Wrapper -->
+  <main class="app-wrapper">
+    <div class="phone-frame">
+      
+      <!-- Dynamic Island / Top Camera Bezel -->
+      <div class="phone-island">
+        <div class="camera-lens"></div>
+      </div>
+
+      <!-- Live Mobile Status Bar -->
+      <div class="phone-status-bar">
+        <span id="phone-clock">9:41</span>
+        <div class="status-icons">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7v10"></path><rect x="1" y="5" width="18" height="14" rx="2" ry="2"></rect></svg>
+        </div>
+      </div>
+
+      <!-- Toast Notification Container -->
+      <div class="toast-notice" id="app-toast">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>
+        <span class="toast-msg">Welcome to StyleMate</span>
+      </div>
+
+      <!-- Phone Inner Scrollable Viewport -->
+      <div class="phone-viewport">
+
+        <!-- ==========================================
+             SCREEN: WELCOME & ONBOARDING
+             ========================================== -->
+        <section class="screen" id="screen-welcome">
+          <div class="welcome-hero">
+            <img src="assets/images/hero.jpg" alt="StyleMate High Fashion" />
+            <div class="welcome-overlay"></div>
+          </div>
+          <div class="welcome-content">
+            <div>
+              <div class="welcome-brand-tag">Couture Intelligence</div>
+              <h2 class="welcome-title">Elevate Your Daily <span>Style</span></h2>
+              <p class="welcome-subtitle">
+                Your bespoke AI stylist. Curating high-impact looks tailored to your physical silhouette, existing wardrobe, occasion, and real-time climate.
+              </p>
+              <div class="carousel-dots">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+              </div>
+            </div>
+            <div class="welcome-actions">
+              <button class="btn-primary" onclick="navigateTo('screen-recs')">
+                Enter StyleMate Studio
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <button class="btn-secondary" onclick="navigateTo('screen-login-dashboard')">
+                Sign In / Login Dashboard
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SCREEN 1: AI STYLIST & OCCASIONS (DEFAULT)
+             ========================================== -->
+        <section class="screen active" id="screen-recs">
+          <div class="app-screen-header">
+            <div class="header-titles">
+              <h2>AI Stylist</h2>
+              <p>Personalized Couture & Everyday Outfits</p>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button class="header-action-btn" onclick="navigateTo('screen-login-dashboard')" title="Member Login Portal">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </button>
+              <button class="header-action-btn" onclick="navigateTo('screen-saved')" title="View Favorites">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic Weather Condition Widget -->
+          <div id="weather-widget-container"></div>
+
+          <!-- Stylist Mode Sub-Nav Switcher -->
+          <div class="stylist-subnav">
+            <button class="stylist-subnav-btn active" id="subnav-btn-recs" onclick="switchStylistView('recs')">
+              Curated Looks
+            </button>
+            <button class="stylist-subnav-btn" id="subnav-btn-sets" onclick="switchStylistView('sets')">
+              ✨ AI Set Combinations
+            </button>
+            <button class="stylist-subnav-btn" id="subnav-btn-critique" onclick="switchStylistView('critique')">
+              Critique Lab
+            </button>
+          </div>
+
+          <!-- VIEW A: CURATED OCCASION LOOKS -->
+          <div id="view-curated-recs">
+            <!-- Occasion Selection Carousel -->
+            <div class="section-title-row">
+              <span class="section-title">Select Occasion</span>
+              <span class="section-link" onclick="showToast('Choose from 10 curated occasion profiles')">10 Curated</span>
+            </div>
+            <div class="occasion-scroll" id="occasion-pills-container"></div>
+
+            <!-- AI Generation CTA -->
+            <div class="generate-action-box">
+              <button class="btn-generate" onclick="generateNewOutfits()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>
+                <span>Generate Recommendations</span>
+              </button>
+            </div>
+
+            <!-- AI Recommendation Cards & Variations Container -->
+            <div id="recommendations-container"></div>
+          </div>
+
+          <!-- VIEW B: BACKEND AI SET COMBINATIONS STUDIO -->
+          <div id="view-ai-sets" style="display: none;">
+            <div class="ai-set-builder-box">
+              <div class="builder-title-row">
+                <h4>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>
+                  AI Set Combinations Engine
+                </h4>
+                <span class="builder-badge">Backend Neural API</span>
+              </div>
+              <p style="font-size: 0.76rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.4;">
+                Assembles multi-piece couture combinations harmonized to your silhouette, color theory, real-time climate, and anchor garments.
+              </p>
+
+              <!-- Anchor Piece Selection -->
+              <div class="form-group" style="margin-bottom: 10px;">
+                <label class="form-label" style="font-size: 0.72rem;">Anchor Garment (Optional)</label>
+                <select class="form-select" id="builder-anchor-select" style="font-size: 0.8rem; padding: 8px 12px;">
+                  <option value="">-- Let AI Select All Pieces Automatically --</option>
+                </select>
+              </div>
+
+              <!-- Style Mood & Occasion -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" style="font-size: 0.72rem;">Target Occasion</label>
+                  <select class="form-select" id="builder-occasion-select" style="font-size: 0.78rem; padding: 8px 10px;">
+                    <option value="office">Office / Work</option>
+                    <option value="party">Party / Night Out</option>
+                    <option value="casual">Casual Weekend</option>
+                    <option value="wedding">Wedding Guest</option>
+                    <option value="interview">Job Interview</option>
+                    <option value="vacation">Resort / Vacation</option>
+                    <option value="festival">Festival & Cultural</option>
+                    <option value="formal">Formal Gala</option>
+                    <option value="sports">Athleisure / Active</option>
+                  </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" style="font-size: 0.72rem;">Style Persona</label>
+                  <select class="form-select" id="builder-style-select" style="font-size: 0.78rem; padding: 8px 10px;">
+                    <option value="old_money">Old Money / Quiet Luxury</option>
+                    <option value="streetwear">Elevated Streetwear</option>
+                    <option value="minimalist">Minimalist Chic</option>
+                    <option value="classic_chic">Classic Parisian</option>
+                    <option value="bohemian">Modern Bohemian</option>
+                  </select>
+                </div>
+              </div>
+
+              <button class="btn-primary" style="width: 100%; padding: 12px;" onclick="triggerBackendSetGeneration()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>
+                <span>Compute AI Outfit Sets</span>
+              </button>
+            </div>
+
+            <!-- Container where backend generated AI Sets are rendered -->
+            <div id="ai-sets-results-container"></div>
+          </div>
+
+          <!-- VIEW C: STYLIST CRITIQUE LAB -->
+          <div id="view-critique-studio" style="display: none;">
+            <div class="ai-set-builder-box">
+              <div class="builder-title-row">
+                <h4>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                  Stylist Critique & Evaluator
+                </h4>
+                <span class="builder-badge">Harmony Scan</span>
+              </div>
+              <p style="font-size: 0.76rem; color: var(--text-secondary); margin-bottom: 14px;">
+                Assemble any combination from your closet to scan for color clashes, formality harmony, and silhouette balance.
+              </p>
+
+              <div class="critique-slot-grid">
+                <div class="form-group" style="margin-bottom: 8px;">
+                  <label class="form-label" style="font-size: 0.7rem;">Top Piece</label>
+                  <select class="form-select" id="critique-select-top" style="font-size: 0.74rem;"></select>
+                </div>
+                <div class="form-group" style="margin-bottom: 8px;">
+                  <label class="form-label" style="font-size: 0.7rem;">Bottom Piece</label>
+                  <select class="form-select" id="critique-select-bottom" style="font-size: 0.74rem;"></select>
+                </div>
+                <div class="form-group" style="margin-bottom: 8px;">
+                  <label class="form-label" style="font-size: 0.7rem;">Outerwear</label>
+                  <select class="form-select" id="critique-select-outer" style="font-size: 0.74rem;"></select>
+                </div>
+                <div class="form-group" style="margin-bottom: 8px;">
+                  <label class="form-label" style="font-size: 0.7rem;">Footwear</label>
+                  <select class="form-select" id="critique-select-shoes" style="font-size: 0.74rem;"></select>
+                </div>
+              </div>
+
+              <button class="btn-primary" style="width: 100%; padding: 11px;" onclick="triggerCombinationCritique()">
+                Scan & Critique Combination
+              </button>
+            </div>
+
+            <!-- Critique Results Container -->
+            <div id="critique-results-container"></div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SCREEN 2: DIGITAL WARDROBE (VIRTUAL CLOSET)
+             ========================================== -->
+        <section class="screen" id="screen-wardrobe">
+          <div class="app-screen-header">
+            <div class="header-titles">
+              <h2>Digital Closet</h2>
+              <p>Organize, Categorize & Track Pieces</p>
+            </div>
+            <button class="header-action-btn" onclick="openAddWardrobeModal()" title="Add Piece">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+          </div>
+
+          <!-- Wardrobe Analytics Box -->
+          <div class="wardrobe-stats-card" id="wardrobe-stats-box"></div>
+
+          <!-- Search Input -->
+          <div class="form-group" style="margin-bottom: 14px;">
+            <input type="text" class="form-input" id="wardrobe-search-input" placeholder="Search clothes by fabric, color, or name..." />
+          </div>
+
+          <!-- Category Filter Tabs -->
+          <div class="category-filter-scroll" id="wardrobe-categories-container"></div>
+
+          <!-- Closet Items Grid -->
+          <div class="wardrobe-grid" id="wardrobe-grid-container"></div>
+
+          <button class="btn-floating-add" onclick="openAddWardrobeModal()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+            Add New Item to Closet
+          </button>
+        </section>
+
+        <!-- ==========================================
+             SCREEN 3: VIRTUAL TRY-ON STUDIO
+             ========================================== -->
+        <section class="screen" id="screen-tryon">
+          <div class="app-screen-header">
+            <div class="header-titles">
+              <h2>Virtual Try-On</h2>
+              <p>Realistic Fitting on Your Silhouette</p>
+            </div>
+            <button class="header-action-btn" onclick="showToast('Camera upload preview active')" title="Upload Photo">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            </button>
+          </div>
+
+          <div class="tryon-container">
+            <!-- View Mode Switcher -->
+            <div class="tryon-view-mode-tabs">
+              <button class="tryon-mode-btn active" id="tryon-btn-editorial" onclick="setTryonViewMode('editorial')">
+                Editorial Lookbook
+              </button>
+              <button class="tryon-mode-btn" id="tryon-btn-mannequin" onclick="setTryonViewMode('mannequin')">
+                Vector Silhouette Mannequin
+              </button>
+            </div>
+
+            <!-- Avatar / Model Fitting Canvas Stage -->
+            <div id="tryon-stage-container"></div>
+
+            <!-- Quick Clothing Swap Rack -->
+            <div class="rack-section">
+              <h4>Instant Rack Swap</h4>
+              <div class="rack-scroll" id="tryon-rack-container"></div>
+            </div>
+
+            <button class="btn-primary" onclick="showToast('✨ Look saved to your Virtual Fitting history!')">
+              Save Fitting to Lookbook
+            </button>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SCREEN 4: SIDE-BY-SIDE OUTFIT COMPARISON
+             ========================================== -->
+        <section class="screen" id="screen-compare">
+          <div class="app-screen-header">
+            <div class="header-titles">
+              <h2>Outfit Comparison</h2>
+              <p>Compare Styles, Versatility & Weather Match</p>
+            </div>
+            <button class="header-action-btn" onclick="renderComparisonView()" title="Refresh Comparison">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+            </button>
+          </div>
+
+          <!-- Comparison Grid -->
+          <div class="compare-grid" id="comparison-grid-container"></div>
+        </section>
+
+        <!-- ==========================================
+             SCREEN 5: PROFILE & PERSONAL CHARACTERISTICS
+             ========================================== -->
+        <section class="screen" id="screen-profile">
+          <div class="app-screen-header">
+            <div class="header-titles">
+              <h2>Style Profile</h2>
+              <p>Body Structure, Skin Undertone & Taste</p>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button class="header-action-btn" onclick="navigateTo('screen-login-dashboard')" title="Account Portal">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+              </button>
+              <button class="header-action-btn" onclick="navigateTo('screen-welcome')" title="Log Out">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+              </button>
+            </div>
+          </div>
+
+          <div id="profile-content-container"></div>
+        </section>
+
+        <!-- ==========================================
+             SCREEN 6: SAVED FAVORITES & LOOKBOOK
+             ========================================== -->
+        <section class="screen" id="screen-saved">
+          <div class="app-screen-header">
+            <div class="header-titles">
+              <h2>Saved Looks</h2>
+              <p>Your Curated Capsule Lookbook</p>
+            </div>
+            <button class="header-action-btn" onclick="navigateTo('screen-recs')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </button>
+          </div>
+
+          <div id="saved-looks-container"></div>
+        </section>
+
+        <!-- ==========================================
+             SCREEN 7: DEDICATED LOGIN & MEMBER DASHBOARD
+             ========================================== -->
+        <section class="screen" id="screen-login-dashboard">
+          <div class="login-portal-header">
+            <div class="login-portal-logo">S</div>
+            <h2>Member Dashboard</h2>
+            <p>Access your bespoke AI wardrobe & couture analytics</p>
+          </div>
+
+          <!-- Active Member Session Card -->
+          <div class="member-session-card" id="member-session-card">
+            <div class="session-top">
+              <span class="session-badge">Active Session</span>
+              <span style="font-size: 0.7rem; color: #10B981; display:flex; align-items:center; gap:4px;">
+                <span style="width:6px; height:6px; border-radius:50%; background:#10B981;"></span>
+                Cloud Synced
+              </span>
+            </div>
+            <div class="session-user">
+              <div class="session-avatar" id="dash-avatar">E</div>
+              <div class="session-details">
+                <h4 id="dash-user-name">Elena Rostova</h4>
+                <p id="dash-user-tier">Couture VIP • Old Money Persona</p>
+              </div>
+            </div>
+
+            <div class="session-stats-grid">
+              <div class="s-stat">
+                <h5 id="dash-wardrobe-count">16</h5>
+                <span>Closet Pieces</span>
+              </div>
+              <div class="s-stat">
+                <h5>5 Days 🔥</h5>
+                <span>Style Streak</span>
+              </div>
+              <div class="s-stat">
+                <h5 id="dash-utilization">94%</h5>
+                <span>Utilization</span>
+              </div>
+            </div>
+
+            <div class="session-actions">
+              <button class="btn-session-action" onclick="navigateTo('screen-recs')">
+                Open Stylist
+              </button>
+              <button class="btn-session-action" onclick="navigateTo('screen-wardrobe')">
+                Open Closet
+              </button>
+              <button class="btn-session-action" style="color: #EF4444;" onclick="handleSignOut()">
+                Sign Out
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick 1-Click Persona Switcher / Demo Login -->
+          <div class="persona-picker-section">
+            <div class="section-title-row">
+              <span class="section-title">Quick 1-Click Demo Personas</span>
+              <span class="section-link" onclick="showToast('Select a persona to test instantly')">Instant Switch</span>
+            </div>
+            <div class="persona-cards-grid">
+              <div class="persona-card active" id="persona-elena" onclick="switchLoginPersona('elena')">
+                <div class="persona-info">
+                  <div class="persona-icon-circle">E</div>
+                  <div class="persona-text">
+                    <h5>Elena Rostova (Executive / Old Money)</h5>
+                    <span>Hourglass • Neutral Beige • 16 Items</span>
+                  </div>
+                </div>
+                <span class="persona-badge-tag">Current</span>
+              </div>
+
+              <div class="persona-card" id="persona-marcus" onclick="switchLoginPersona('marcus')">
+                <div class="persona-info">
+                  <div class="persona-icon-circle" style="color: #5B8DEF;">M</div>
+                  <div class="persona-text">
+                    <h5>Marcus Vance (Streetwear & Tech Minimal)</h5>
+                    <span>Athletic V-Taper • Golden Olive • 12 Items</span>
+                  </div>
+                </div>
+                <span class="persona-badge-tag">Switch</span>
+              </div>
+
+              <div class="persona-card" id="persona-aria" onclick="switchLoginPersona('aria')">
+                <div class="persona-info">
+                  <div class="persona-icon-circle" style="color: #E0A996;">A</div>
+                  <div class="persona-text">
+                    <h5>Aria Chen (Contemporary Minimal Chic)</h5>
+                    <span>Rectangle • Warm Ivory • 14 Items</span>
+                  </div>
+                </div>
+                <span class="persona-badge-tag">Switch</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Login Form -->
+          <div class="login-form-box">
+            <div class="auth-tabs" style="margin-bottom: 16px;">
+              <button type="button" class="auth-tab active" id="dash-tab-signin" onclick="switchDashAuthTab('signin')">Sign In</button>
+              <button type="button" class="auth-tab" id="dash-tab-signup" onclick="switchDashAuthTab('signup')">Create Account</button>
+            </div>
+
+            <!-- Social Logins -->
+            <div class="social-login-grid">
+              <button class="btn-social" type="button" onclick="simulateSocialLogin('Apple')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.84c.62-.75 1.04-1.8 0.93-2.84-.9.04-1.99.6-2.63 1.35-.57.65-1.06 1.71-.93 2.72 1.01.08 2.03-.5 2.63-1.23Z"/></svg>
+                Apple ID
+              </button>
+              <button class="btn-social" type="button" onclick="simulateSocialLogin('Google')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+                Google
+              </button>
+            </div>
+
+            <div class="divider-text">OR SIGN IN WITH EMAIL</div>
+
+            <form onsubmit="handleDashboardLoginSubmit(event)">
+              <div class="form-group" id="dash-name-field" style="display: none;">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-input" id="dash-input-name" placeholder="Elena Rostova" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" id="dash-input-email" value="elena.rostova@couture.ai" required />
+              </div>
+
+              <div class="form-group">
+                <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                  <label class="form-label">Password</label>
+                  <a href="javascript:void(0)" onclick="showToast('Password reset link sent to email')" style="font-size: 0.7rem; color: var(--accent-gold); text-decoration: none;">Forgot?</a>
+                </div>
+                <input type="password" class="form-input" id="dash-input-password" value="password123" required />
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+                <input type="checkbox" id="dash-remember" checked style="accent-color: var(--accent-gold);" />
+                <label for="dash-remember" style="font-size: 0.74rem; color: var(--text-secondary);">Remember this device</label>
+              </div>
+
+              <button type="submit" class="btn-primary" id="dash-auth-submit-btn">
+                Sign In to Member Portal
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SCREEN 8: FASHION LUXURY BOUTIQUE
+             (Exact replica of uploaded design reference)
+             ========================================== -->
+        <section class="screen" id="screen-fashion">
+          
+          <!-- Top Drag Notch Handle -->
+          <div class="fashion-notch-bar">
+            <div class="fashion-notch-handle"></div>
+          </div>
+
+          <!-- Top Navigation Header: Fashion · Wardrobe · Avatar -->
+          <div class="fashion-top-nav">
+            <button class="fashion-top-tab active" id="ftab-fashion" onclick="navigateTo('screen-fashion')">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+              <span>Fashion</span>
+            </button>
+            <button class="fashion-top-tab" id="ftab-wardrobe" onclick="navigateTo('screen-wardrobe')">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+              <span>Wardrobe</span>
+            </button>
+            <button class="fashion-top-tab" id="ftab-avatar" onclick="navigateTo('screen-tryon')">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span>Avatar</span>
+            </button>
+          </div>
+
+          <!-- Category Filter Bar (Pants, Dress, Shoes, Bags, Jacket, Hat, Beauty) -->
+          <div class="fashion-category-bar">
+            <!-- Pants / Trousers -->
+            <button class="fashion-cat-btn" data-cat="pants" onclick="selectBoutiqueCategory('pants')" title="Pants & Trousers">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 3h12v4l-2 14h-3l-1-9-1 9H8L6 7V3z"></path>
+              </svg>
+            </button>
+
+            <!-- Dress -->
+            <button class="fashion-cat-btn" data-cat="dresses" onclick="selectBoutiqueCategory('dresses')" title="Dresses & Gowns">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 3h8l2 6-3 2 4 10H5l4-10-3-2 2-6z"></path>
+              </svg>
+            </button>
+
+            <!-- Shoes -->
+            <button class="fashion-cat-btn" data-cat="shoes" onclick="selectBoutiqueCategory('shoes')" title="Luxury Footwear">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 18h18v3H3z M5 18l5-10h4l6 10"></path>
+              </svg>
+            </button>
+
+            <!-- Bags (Active by default matching screenshot) -->
+            <button class="fashion-cat-btn active" data-cat="bags" onclick="selectBoutiqueCategory('bags')" title="Designer Handbags">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="4" y="8" width="16" height="13" rx="3"></rect>
+                <path d="M8 8V5a4 4 0 0 1 8 0v3"></path>
+              </svg>
+            </button>
+
+            <!-- Jacket / Outerwear -->
+            <button class="fashion-cat-btn" data-cat="outerwear" onclick="selectBoutiqueCategory('outerwear')" title="Jackets & Blazers">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 4l6 4 6-4 3 6-4 11H7L3 10l3-6z"></path>
+                <path d="M12 8v13"></path>
+              </svg>
+            </button>
+
+            <!-- Hat -->
+            <button class="fashion-cat-btn" data-cat="hats" onclick="selectBoutiqueCategory('hats')" title="Hats & Headwear">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 18h18c-1-3-4-4-5-4l-1-7H9L8 14c-1 0-4 1-5 4z"></path>
+              </svg>
+            </button>
+
+            <!-- Beauty / Accessories -->
+            <button class="fashion-cat-btn" data-cat="beauty" onclick="selectBoutiqueCategory('beauty')" title="Beauty & Lipsticks">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 3l4 4L9 19l-4-4L17 3z"></path>
+                <line x1="14" y1="6" x2="18" y2="10"></line>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Deselect Control Row -->
+          <div class="fashion-action-row">
+            <button class="btn-deselect-pill" id="btn-deselect-boutique" onclick="deselectBoutiqueProduct()">
+              Deselect
+            </button>
+          </div>
+
+          <!-- 3-Column Luxury Product Catalog Grid -->
+          <div class="fashion-product-grid" id="fashion-product-grid">
+            <!-- Dynamically populated from BOUTIQUE_PRODUCTS -->
+          </div>
+
+          <!-- Floating Purchase Bottom Bar (Appears when item is selected) -->
+          <div class="fashion-purchase-bar" id="fashion-purchase-bar">
+            <div class="purchase-info" onclick="purchaseBoutiqueProduct()">
+              <h4 class="purchase-title">Purchase item</h4>
+              <p class="purchase-subtitle" id="purchase-item-subtitle">Kisslock Barrel Bag · ₹290.00</p>
+            </div>
+            <div class="purchase-divider"></div>
+            <button class="purchase-trash-btn" onclick="deselectBoutiqueProduct()" title="Deselect item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+              </svg>
+            </button>
+          </div>
+
+        </section>
+
+      </div> <!-- /phone-viewport -->
+
+      <!-- Bottom Navigation Dock -->
+      <nav class="app-bottom-nav">
+        <button class="nav-tab" data-screen="screen-fashion" onclick="navigateTo('screen-fashion')" title="Fashion Store">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>Fashion</span>
+        </button>
+
+        <button class="nav-tab active" data-screen="screen-recs" onclick="navigateTo('screen-recs')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>
+          <span>Stylist</span>
+        </button>
+
+        <button class="nav-tab" data-screen="screen-wardrobe" onclick="navigateTo('screen-wardrobe')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3c0 .8.3 1.5.8 2L2 14v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4L14.2 7A3 3 0 0 0 12 2Z"></path></svg>
+          <span>Closet</span>
+        </button>
+
+        <button class="nav-tab" data-screen="screen-tryon" onclick="navigateTo('screen-tryon')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>Try-On</span>
+          <span class="badge-dot"></span>
+        </button>
+
+        <button class="nav-tab" data-screen="screen-compare" onclick="navigateTo('screen-compare')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Compare</span>
+        </button>
+
+        <button class="nav-tab" data-screen="screen-profile" onclick="navigateTo('screen-profile')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span>Profile</span>
+        </button>
+      </nav>
+
+      <!-- Smartphone Bottom Home Indicator -->
+      <div class="phone-home-indicator"></div>
+
+    </div> <!-- /phone-frame -->
+  </main>
+
+  <!-- ==========================================
+       MODAL: ADD NEW WARDROBE PIECE
+       ========================================== -->
+  <div class="modal-backdrop" id="add-item-modal">
+    <div class="modal-sheet">
+      <div class="sheet-handle" onclick="closeAddWardrobeModal()"></div>
+      <div class="sheet-header">
+        <h3>Add to Digital Closet</h3>
+        <p>Digitize and categorize a new clothing piece</p>
+      </div>
+
+      <form onsubmit="submitNewWardrobeItem(event)">
+        <div class="form-group">
+          <label class="form-label">Garment Name</label>
+          <input type="text" class="form-input" id="new-item-name" placeholder="e.g. Silk Wrap Dress, Linen Overshirt" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-select" id="new-item-cat">
+            <option value="tops">Tops & Shirts</option>
+            <option value="bottoms">Bottoms & Trousers</option>
+            <option value="outerwear">Outerwear & Jackets</option>
+            <option value="dresses">Dresses & Suits</option>
+            <option value="footwear">Footwear</option>
+            <option value="accessories">Bags & Accessories</option>
+          </select>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="form-group">
+            <label class="form-label">Color Swatch</label>
+            <input type="color" class="form-input" id="new-item-color" value="#3A4D39" style="height: 44px; padding: 4px;" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Color Name</label>
+            <input type="text" class="form-input" id="new-item-color-name" placeholder="Forest Sage" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Fabric & Material</label>
+          <input type="text" class="form-input" id="new-item-fabric" placeholder="e.g. 100% Linen, Cashmere, Mulberry Silk" required />
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn-secondary" onclick="closeAddWardrobeModal()">Cancel</button>
+          <button type="submit" class="btn-primary">Save to Closet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Application Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
